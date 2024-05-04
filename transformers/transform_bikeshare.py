@@ -26,6 +26,7 @@ def transform(data, data_2, *args, **kwargs):
     bikeshare_df = data_2.copy()
 
     bikeshare_df = bikeshare_df.drop_duplicates().reset_index(drop=True)
+    bikeshare_df = bikeshare_df.dropna()
 
     def week_of_month(dt):
         year = dt.year
@@ -36,10 +37,10 @@ def transform(data, data_2, *args, **kwargs):
         return week_number
 
     start_date = pd.to_datetime('2024-01-01')
-    end_date = pd.to_datetime('2024-02-01')
+    end_date = pd.to_datetime('2024-04-01')
     # Create a DataFrame for the date dimension
     dim_date = pd.DataFrame({'date': pd.date_range(start_date, end_date, freq='H')})
-    dim_date['date_id'] = dim_date['date'].dt.strftime('%Y%m%d%H')
+    dim_date['date_id'] = dim_date['date'].dt.strftime('%Y%m%d%H%M').astype('int64')
     dim_date['date_iso_format'] = dim_date['date'].apply(lambda x: x.isoformat())
     dim_date['year_number'] = dim_date['date'].dt.year
     dim_date['quarter_number'] = dim_date['date'].dt.quarter
@@ -48,7 +49,7 @@ def transform(data, data_2, *args, **kwargs):
     dim_date['day_number'] = dim_date['date'].dt.day
     dim_date['hour_number'] = dim_date['date'].dt.hour
     dim_date['day_Name'] = dim_date['date'].dt.strftime('%A')
-    dim_date['weekofMonth'] = dim_date['date'].apply(week_of_month)
+    dim_date['weekofMonth'] = dim_date['date'].apply(week_of_month).astype(int)
     dim_date['weekofYear'] = dim_date['date'].dt.strftime('%U')
 
     new_order = ['date_id', 'date_iso_format','year_number','month_number','quarter_number','day_number','hour_number','day_Name','weekofMonth','weekofYear','monthName']
@@ -74,6 +75,8 @@ def transform(data, data_2, *args, **kwargs):
     new_order = ['Station_ID', 'Station_Name','Latitude','Longitude','Status']
     station_df = station_df[new_order]
     station_df = station_df.dropna()
+    station_df['Station_ID']= station_df['Station_ID'].astype('int64')
+    
 
     bikeshare_df['fact_id'] = range(1, len(bikeshare_df) + 1)
     bikeshare_df['start_time_id'] =  pd.to_datetime(bikeshare_df['start_time']).dt.strftime('%Y%m%d%H%M').astype('int64')
