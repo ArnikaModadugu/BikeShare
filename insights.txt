@@ -1,0 +1,29 @@
+/*Avg Duration by Passholder Type for Jan*/
+passholder_type	Avg_Duration
+Monthly Pass	17.35
+Annual Pass	8.73
+Walk-up	45.63
+One Day Pass	49.93
+
+
+/*Stations with less than 100 start times*/
+station_id	Station_Name
+3079	Temple & Vignes
+4539	Cherokee & Hollywood
+4559	Palms & Kelton
+4565	Alla & Maxella
+4601	Lankershim & Hesby
+4595	Chandler & Colfax
+4600	Lankershim & Califa
+4577	Inglewood & Braddock
+4665	Gateway Plaza
+4603	Riverside & Cahuenga
+4604	Lankershim & Vineland
+4598	North Hollywood Plaza
+4667	Ciclavia Melrose - Fairfax Hub
+4605	Mariota & Riverside
+
+/*Avg Duration by Bike Type*/
+bike_type	Avg_Duration
+electric	26.38
+standard	28.01
